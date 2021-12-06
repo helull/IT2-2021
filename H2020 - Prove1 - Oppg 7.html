@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<title></title>
+</head>
+<body>
+	<h1>Areal og omkrets av rektangel</h1>
+	<input id="inpLengde" type="number" placeholder="Oppgi lengde i rektangelet">
+	<br>
+	<input id="inpBredde" type="number" placeholder="Oppgi bredde i rektangelet">
+	<h1 id="txtSvar"></h1>
+	<script type="text/javascript">
+		var inpLengde = document.getElementById("inpLengde"); 
+		var inpBredde = document.getElementById("inpBredde"); 
+		var txtSvar = document.getElementById("txtSvar"); 
+
+		function regnSvar() {
+			var lengde = Number(inpLengde.value); 
+			var bredde = Number(inpBredde.value);
+			var areal = lengde * bredde;
+			var omkrets = 2 * lengde + 2 * bredde;
+			txtSvar.innerHTML = "Areal:" + areal + " Omkrets:" + omkrets;
+		}
+
+		inpLengde.oninput = inpBredde.oninput = regnSvar;		
+	</script>
+</body>
+</html>

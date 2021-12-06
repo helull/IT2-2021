@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<title></title>
+</head>
+<body>
+	<h1>Sum av alle heltall mellom start og slutt</h1>
+	<input id="inpStart" type="number" placeholder="Oppgi startverdi">
+	<br>
+	<input id="inpSlutt" type="number" placeholder="Oppgi sluttverdi">
+	<button id="btnBeregn">Beregn sum</button>
+	<h1 id="txtSvar"></h1>
+	<script type="text/javascript">
+		var inpStart = document.getElementById("inpStart"); 
+		var inpSlutt = document.getElementById("inpSlutt"); 
+		var txtSvar = document.getElementById("txtSvar"); 
+		var btnBeregn = document.getElementById("btnBeregn"); 
+
+		btnBeregn.onclick = function () {
+			var start = Number(inpStart.value);
+			var slutt = Number(inpSlutt.value);
+			var sum = 0;
+
+			if (start > slutt) {
+				txtSvar.innerHTML = "Startverdien er større enn sluttveriden!";
+			} else if ((start < 0) || (slutt < 0)) {
+				txtSvar.innerHTML = "Ett eller begge tallene er negative!";
+			} else {
+				for (var tall = start; tall <= slutt; tall++) {
+					sum = sum + tall;
+				}
+				txtSvar.innerHTML = "Summen er: " + sum;
+			}
+		}		
+	</script>
+</body>
+</html>
