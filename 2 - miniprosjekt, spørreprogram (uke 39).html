@@ -66,12 +66,12 @@
 				//Hvis rett svar på spm2:
 				if (inpSpm2.value.toLowerCase() === "praha") {
 					txtOutput.innerHTML = "Supert, det stemmer!";
-					imgBilde.scr = "https://i0.wp.com/www.frisbeegolf.no/wp-content/uploads/pokal.jpg?w=220&ssl=1";
+					imgBilde.src = "pokal.jpg";
 					imgBilde.alt = "Bilde av pokal";
 					tegnCanvas();
 				} else {   //Hvis feil svar!
 					txtOutput.innerHTML = "ejej, prøv på nytt!"
-					imgBilde.scr = "https://upload.wikimedia.org/wikipedia/commons/thumb/a/ae/Troccas-0-der-narr.jpg/800px-Troccas-0-der-narr.jpg";
+					imgBilde.src = "narr.jpg";
 					imgBilde.alt = "Bilde av narr";
 					summerTall(15, inpSpm1.value);
 				}
