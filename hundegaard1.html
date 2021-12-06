@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <style>
+        img {
+            border-style: solid;
+            border-radius: 50%;
+            transition-duration: 0.8s; //se side 248
+        }
+        .blink {
+            border-style:dotted;
+            border-radius:4%;
+            background-color: bisque;
+            transition-duration:3s;
+        }
+    </style>
+</head>
+<body>
+    <div style="position:relative">
+        <h1>Ett poeng pr klikk! Klikk på hunden for å sjekke, BINGO hvis x=[200, 500] og y=[100,400] </h1>
+        <button style="position:absolute ; top:40px" id="knappX">Tilfeldig x-verdi</button>
+        <button style="position:absolute ; left:300px;top:40px"  id="knappY">Tilfeldig y-verdi</button>
+        <button style="position:absolute ; left:600px;top:40px"  id="nullstill">Nullstill</button>
+        <img style="position:absolute ; top:100px" id="minHund" src="hund.jpg"  width = "200" alt="Bilde av hund">
+        <p id="blinkID" class="blink" style=" position:absolute; z-index: -2; top:100px ; left:200px ; width:300px; height:300px"></p>
+        <h1 style="position:absolute ; right:100px;top:80px" id="poengteller">0</h1>
+    </div>
+    <script>
+        var poeng = 0;
+        var knappX=document.getElementById("knappX");
+        var knappY=document.getElementById("knappY");
+        var minHund=document.getElementById("minHund");
+        var nullstill=document.getElementById("nullstill");
+        var blinkID=document.getElementById("blinkID");
+        var poengteller=document.getElementById("poengteller");
+        var poeng = 0;
+        minHund.onclick = function(evt) {
+            var venstre = parseInt(minHund.style.left); 
+            var toppen = parseInt(minHund.style.top);
+            if (venstre < 600 && venstre > 200) {
+                if (toppen < 400 && toppen > 100) {
+                    blinkID.style.backgroundColor = "blue";
+                    blinkID.style.transform = "rotate(45deg)";
+                    alert("BINGO! Du er innafor!");
+                    //alert("Du fikk: " + poeng + " poeng!");
+                }
+            }    
+            else {
+                alert ("Du er: " + minHund.style.left + " fra venstre, og: " + minHund.style.top + " fra toppen!");
+                alert("Du har: " + poeng + " poeng foreløpig!");
+            }
+        }
+        nullstill.onclick = function(evt) {
+            poeng = 0;
+            minHund.style.left = "0px";
+            minHund.style.top = "100px";
+            blinkID.style.backgroundColor = "bisque";
+            blinkID.style.transform = "rotate(0deg)";
+            oppdaterPoengTeller(0);
+        }
+        knappX.onclick = function(evt) {
+            var tilfX=Math.random() * window.innerWidth;
+            minHund.style.left = tilfX + "px";
+            oppdaterPoengTeller(1);
+        }
+        knappY.onclick = function(evt) {
+            var tilfY=Math.random() * window.innerHeight;
+            minHund.style.top = tilfY + "px";
+            oppdaterPoengTeller(1);
+        }
+        function oppdaterPoengTeller(tall) {
+            if (tall === 1) {
+                poeng ++;
+                poengteller.innerHTML = poeng;
+            } else if (tall === 0) {
+                poeng = 0;
+                poengteller.innerHTML = poeng;
+            } else {
+                alert("inputverdien i poengtelleren har ugyldig verdi, den er: " + tall);
+            }  
+        }     
+
+        document.onkeydown = function (evt) {
+            var tastekode=evt.keyCode;
+            //alert("tast trykket er: " + tastekode);
+
+            if (tastekode === 38) {
+                var y_verdi = parseInt(minHund.style.top);
+                y_verdi -= 10;                
+                minHund.style.top = y_verdi + "px";
+            }
+
+            if (tastekode === 38) {
+                var y_verdi = parseInt(minHund.style.top);
+                y_verdi -= 10;                
+                minHund.style.top = y_verdi + "px";
+            }
+        }
+
+    </script>
+</body>
+</html>

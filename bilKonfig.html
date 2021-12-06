@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<title>
+		Bilbygger
+	</title>
+</head>
+<body>
+	<label><input id="rbBlaa" type="radio" data-filnavn="blaaBil.jpg" name="farge">Blå</label>
+	<label><input id="rbSort" type="radio" data-filnavn="sortBil.jpg" name="farge">Sort</label>
+	<label><input id="rbHvit" type="radio" data-filnavn="hvitBil.jpg" name="farge"checked>Hvit</label>
+	<label><input id="rbRod" type="radio" data-filnavn="rodBil.jpg" name="farge">Rød</label>
+
+	<br>
+	<label><input id="chkStort" type="checkbox">Stort bilde</label>
+	<br>
+
+	<img id="imgBilde" src="" alt="kunne ikke vise bildet">
+	<h1 id="txtBilde">Dummy-tekst</h1>
+
+	<script type="text/javascript">
+	var rbBlaa = document.getElementById("rbBlaa");
+	var rbSort = document.getElementById("rbSort");
+	var rbHvit = document.getElementById("rbHvit");
+	var rbRod = document.getElementById("rbRod");
+	var txtBilde = document.getElementById("txtBilde");
+	var imgBilde = document.getElementById("imgBilde");
+	var chkStort = document.getElementById("chkStort");
+
+	function valgtBil(evt) {
+		var trykketKnapp = evt.target;
+		var bildeFilnavn = trykketKnapp.getAttribute("data-filnavn");
+		imgBilde.src = bildeFilnavn;
+		txtBilde.innerHTML = "Bildet som vises er: " + bildeFilnavn;
+	}
+	rbBlaa.onclick = rbSort.onclick = rbRod.onclick = rbHvit.onclick = valgtBil;
+
+	function stortEllerLite() {
+		if (chkStort.checked === true) {
+			imgBilde.width = 500;
+		} else {
+			imgBilde.width = 100;
+		}
+	}
+	chkStort.onchange = stortEllerLite;
+
+	imgBilde.onmouseover = function () {
+		imgBilde.width = window.innerWidth;
+	}
+
+	imgBilde.onmouseout = function () {
+		stortEllerLite();
+	}
+	</script>
+</body>
+</html>
