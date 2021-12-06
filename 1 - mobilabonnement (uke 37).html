@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<title>mobilabonnement</title>
+</head>
+<body>
+	<input id="inpDatamengde" type="number" placeholder="datamengde" name="">
+	<input id="inpAntSamtaler" type="number" placeholder="antall samtaler" name="">
+	<input id="inpRingetid" type="number" placeholder="ringetid" name="">
+	<input id="inpAntallSMS" type="number" placeholder="antall SMS" name="">
+	<input id="inpAntallMMS" type="number" placeholder="antall MMS" name="">
+	<button id="btnRegnPris">Regn pris</button>
+	<br>
+	<p id="txtOutput">...ingen pris...</p>
+
+	<script type="text/javascript">
+		//lager variabler av alle HTML-elementene
+		var inpDatamengde = document.getElementById("inpDatamengde");
+		var inpAntSamtaler = document.getElementById("inpAntSamtaler");
+		var inpRingetid = document.getElementById("inpRingetid");
+		var inpAntallSMS = document.getElementById("inpAntallSMS");
+		var inpAntallMMS = document.getElementById("inpAntallMMS");
+		var txtOutput = document.getElementById("txtOutput");
+		var btnRegnPris = document.getElementById("btnRegnPris");
+
+		//initierer en global variabel for prisen.
+		var pris = 0;	
+
+		//Regner ut prisen når du klikker på knappen
+		btnRegnPris.onclick = function() {
+			pris = Number(inpDatamengde.value) * 10 + Number(inpAntSamtaler.value)*0.89 + Number(inpRingetid.value)*0.39 + Number(inpAntallSMS.value)*0.69 + Number(inpAntallMMS.value)*1.99
+			txtOutput.innerHTML = String(pris);
+		}
+	</script>
+
+</body>
+</html>

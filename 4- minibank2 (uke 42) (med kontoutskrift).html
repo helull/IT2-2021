@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<title></title>
+</head>
+<body>
+
+	<h1>Velkommen til min Minibank</h1>
+	<h2>Saldo på kontoen: </h2> 
+	<p id="pSaldo" type="number"></p>
+	<input type="number" id="inpSettInn"> 
+    <button id="btnSettInn">Sett inn kontanter</button>
+    <br>
+    <input type="number" id="inpTaUt"> 
+    <button id="btnTaUt">Ta ut kontanter</button>
+    <button id="btnKontoutskrift">Kontoutskrift</button>
+	<div id="utskrift"></div>
+
+	<script type="text/javascript">
+
+		var saldo = 20000;  //global variabel
+		var pSaldo = document.getElementById("pSaldo");
+		var btnTaUt = document.getElementById("btnTaUt");
+		var inpTaUt = document.getElementById("inpTaUt");
+		var btnSettInn = document.getElementById("btnSettInn");
+		var inpSettInn = document.getElementById("inpSettInn");
+		var btnKontoutskrift = document.getElementById("btnKontoutskrift");
+		var utskrift = document.getElementById("utskrift");
+		
+		pSaldo.innerHTML = String(saldo);
+		var mineTransaksjoner=[];
+
+		btnSettInn.onclick = function () {
+			saldo = saldo +  Number(inpSettInn.value);
+			pSaldo.innerHTML = String(saldo);
+
+			// Legg inn transaksjonen i et objekt.
+			var tempTrans = {belop:0, innEllerUt:"", dato:""};
+			tempTrans.belop = Number(inpSettInn.value);
+			tempTrans.innEllerUt = "inn";
+			tempTrans.dato = "28.10.2021";
+			mineTransaksjoner.push(tempTrans);
+		}
+
+		btnTaUt.onclick = function () {
+			var uttak = Number(inpTaUt.value); 
+			if ((saldo - uttak) < 0) {
+				alert("Ups, så mye har du ikke på kontoen!");
+			} else {
+				saldo = saldo - uttak;
+				pSaldo.innerHTML = String(saldo);
+
+				// Legg inn transaksjonen i et objekt.
+				var tempTrans = {belop:0, innEllerUt:"", dato:""};
+				tempTrans.belop = Number(inpTaUt.value);
+				tempTrans.innEllerUt = "ut";
+				tempTrans.dato = "28.10.2021";
+				mineTransaksjoner.push(tempTrans);
+			}		
+		}
+
+		btnKontoutskrift.onclick = function() {
+			utskrift.innerHTML = "";
+			nr = 0;
+			while(nr <= mineTransaksjoner.length - 1) {
+				if (mineTransaksjoner[nr].innEllerUt === "inn") {
+					utskrift.innerHTML += "<h1 style='color:green'>Beløp: "+ mineTransaksjoner[nr].belop + " er penger " + mineTransaksjoner[nr].innEllerUt + "dato: " + mineTransaksjoner[nr].dato + "<br>";
+				}
+				if (mineTransaksjoner[nr].innEllerUt === "ut") {
+					utskrift.innerHTML += "<h1 style='color:red'>Beløp: "+ mineTransaksjoner[nr].belop + " er penger " + mineTransaksjoner[nr].innEllerUt + "dato: " + mineTransaksjoner[nr].dato + "<br>";
+				}
+
+				nr++; //inkrementer while-løkka
+			}
+		}
+	</script>
+</body>
+</html>

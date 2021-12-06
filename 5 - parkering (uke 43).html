@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<title>parkering</title>
+</head>
+<body>
+
+
+En knapp som heter «Skriv ut oversikt» skal vise en oversikt over alle parkerte biler
+
+	<input id="inpRegNr" placeholder = "Bilens registreringsnr" type="text">
+	<input id="inpMerke" placeholder = "Bilmerke" type="">
+	<input id="inpAntPassasjerer" placeholder = "Antall passasjerer" type="number">
+	<input id="inpTid" placeholder = "Tid for ankomst" type="text">
+	<button id="btnLeggInn">Registrer parkering</button>
+	<hr>
+	<button id="btnVisOversikt">Skriv ut oversikt</button>
+	<hr>
+	<p>Søk opp en bestemt bil:</p>
+	<input id="inpIdSok" placeholder = "Gi Regnr" type="">
+	<button id="btnVisInfoOmID">Vis info om denne bilen</button>
+	<h3 id="txtOutput"></h3>
+
+	<script type="text/javascript">
+		var inpRegNr = document.getElementById("inpRegNr");
+		var inpMerke = document.getElementById("inpMerke");
+		var inpAntPassasjerer = document.getElementById("inpAntPassasjerer");
+		var inpTid = document.getElementById("inpTid");
+		var btnLeggInn = document.getElementById("btnLeggInn");
+		var inpIdSok = document.getElementById("inpIdSok");
+		var btnVisOversikt = document.getElementById("btnVisOversikt");
+		var btnVisInfoOmID = document.getElementById("btnVisInfoOmID");
+		var txtOutput = document.getElementById("txtOutput");
+
+		var parkArray = [];
+
+		btnLeggInn.onclick = function(){
+			var temp = {reg:"", merke:"", ant:0, tid:""};
+			temp.reg=String(inpRegNr.value.toLowerCase());  //tvinger små bokstaver
+			temp.merke=String(inpMerke.value);
+			temp.ant=Number(inpAntPassasjerer.value);
+			temp.tid=Number(inpTid.value);
+			parkArray.push(temp);
+		}
+
+		btnVisOversikt.onclick = function(){
+			var nr=0;
+			txtOutput.innerHTML = "";
+			while (nr<parkArray.length){
+				txtOutput.innerHTML += `<p>Regnr: ${parkArray[nr].reg} er en ${parkArray[nr].merke} og parkerte kl ${parkArray[nr].tid}</p>`;
+				nr++;
+			}
+		}
+
+		btnVisInfoOmID.onclick = function(){
+			var nr=0;
+			var funnet=false;
+			while (nr<parkArray.length){
+				if(parkArray[nr].reg === String(inpIdSok.value.toLowerCase())) {
+					alert(`fant denne: ID: ${parkArray[nr].reg} som er en ${parkArray[nr].merke} og parkerte kl ${parkArray[nr].tid}`);
+					funnet = true;
+				}
+				nr++;
+			}
+
+			if (!funnet) {
+				alert("Denne bilen er ikke parkert her");
+			}
+		}
+	</script>
+</body>
+</html>

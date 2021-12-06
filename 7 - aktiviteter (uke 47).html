@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+
+<head>
+    <meta charset="UTF-8">
+    <title>142 i boka 131 </title>
+
+    <style>
+
+    </style>
+</head>
+
+<body>
+    <h1>Registrer din fritidsaktivitet:</h1>
+    <input type="string" id="inpAktivitetsnavn" placeholder="Aktivitetsnavn ">
+    <input type="number" id="inpAntallÅr" placeholder="Hvor lenge har du gjort dette?">
+    <input type="text" id="inpLagOrSolo" placeholder="Lag eller individuell aktivitet" list="AktivitetType">
+    <datalist id="AktivitetType">
+        <option value="Lag aktivitet">
+        <option value="individuell aktivitet">
+    </datalist>
+
+    <button id="btnRegAktivitet">Registrer aktivitet</button>
+    <button id="btnOversik">Skriv ut oversik</button>
+
+    <div id="utskrift"> </div>
+
+
+    <img src="solo.jpg" alt="" id="imgSolo" width="500">
+    <img src="lag.jpg" alt="" id="imgLag" width="500">
+    <div id="solo"> </div>
+    <div id="lag"> </div>
+
+    <script type="text/javascript">
+        var inpAktivitetsnavn = document.getElementById("inpAktivitetsnavn");
+        var inpAntallÅr = document.getElementById("inpAntallÅr");
+        var inpLagOrSolo = document.getElementById("inpLagOrSolo");
+        
+
+        var btnRegAktivitet = document.getElementById("btnRegAktivitet");
+        var btnOversik = document.getElementById("btnOversik");
+
+        var nr = 0;
+
+        var minOversikt = [];
+
+        btnRegAktivitet.onclick = function () {
+            var tempAktivitetinfo = { Navn: "", År: "", Type: "" };
+            tempAktivitetinfo.Navn = String(inpAktivitetsnavn.value);
+            tempAktivitetinfo.År = Number(inpAntallÅr.value);
+            tempAktivitetinfo.Type = String(inpLagOrSolo.value);
+            minOversikt.push(tempAktivitetinfo)
+            alert("Du har registrert din Aktivitet!")
+        }
+
+        btnOversik.onclick = function () {
+            nr = 0;
+            utskrift.innerHTML = ""
+            while (nr < minOversikt.length) {
+                utskrift.innerHTML += "<h1 style='color:black'> Din aktivitet er " + minOversikt[nr].Navn + " Du har holdt på med denne i " +
+                minOversikt[nr].År + " år " + " og aktiviteten er en  " + minOversikt[nr].Type + "<br>";
+                nr++
+            }
+        }
+
+        imgSolo.onclick = function () {
+    
+                alert("hei")
+            }
+            
+   
+        imgLag.onclick = function () {
+           
+           alert("hei")
+       }
+
+
+
+
+    </script>
+
+
+</body>
+
+</html>

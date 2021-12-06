@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<title>spørreprogram</title>
+</head>
+<body>
+	<input id="inpSpm1" type="number" placeholder="Hvor gammel er du?" name="">
+	<input id="inpSpm2" type="text" placeholder="Hva heter hovedstaden i Sverige?" name="">
+	<button id="btnSvarKnapp">Trykk her</button>
+	<h1 id="txtOutput">...her kommer svaret...</h1>
+	<p id="txtSum"></p>
+	<p id="txtAlderMelding"></p>
+	<img scr="" alt="Tomt bilde" id="imgBilde">
+
+	<script type="text/javascript">
+		var inpSpm1 = document.getElementById("inpSpm1");
+		var inpSpm2 = document.getElementById("inpSpm2");
+		var btnSvarKnapp = document.getElementById("btnSvarKnapp");
+		var txtOutput = document.getElementById("txtOutput");
+		var imgBilde = document.getElementById("imgBilde");
+		var txtSum = document.getElementById("txtSum")
+		var txtAlderMelding = document.getElementById("txtAlderMelding")
+
+		function vurderAlder(alder) {
+			var melding ="";
+			if (alder <= 18) {
+				melding = "Du er ungdom";
+			} else if (alder <= 29) {
+				melding = "Du er ung voksen";
+			} else if (alder <= 66) {
+				melding = "Familien er viktigst";
+			} else {
+				melding = "Snart pensjonist?";
+			}
+			txtAlderMelding.innerHTML = melding;
+		}
+
+		function tegnCanvas() {
+			//div canvasting, ikke ferdig
+		}
+
+		function summerTall(fra, til) {
+			var sum = 0;
+			for (var tall = fra; tall <= til; tall++) {
+				sum = sum + tall;
+			}
+			txtSum.innerHTML = "Summen fra 15 til din alder er: " + sum;
+		}
+
+		btnSvarKnapp.onclick = function() {
+
+			//Brukeren har tomt felt i svar1 ELLER svar2.
+			if(inpSpm1.value === "" || inpSpm2.value === "") {
+				txtOutput.innerHTML = "Du må skrive noe i begge feltene!";
+				imgBilde.scr = "";
+				imgBilde.alt = "Tomt bilde";
+			} else {  //Bruker har svart noe
+
+				//Skaler bildet uansett, selv om det er pokal eller narr som kommer!
+				imgBilde.width = Number(inpSpm1.value) * 10;
+
+				//Vurder alderen og skriv melding
+				vurderAlder(Number(inpSpm1.value));
+				
+				//Hvis rett svar på spm2:
+				if (inpSpm2.value.toLowerCase() === "praha") {
+					txtOutput.innerHTML = "Supert, det stemmer!";
+					imgBilde.scr = "pokal.jpg";
+					imgBilde.alt = "Bilde av pokal";
+					tegnCanvas();
+				} else {   //Hvis feil svar!
+					txtOutput.innerHTML = "ejej, prøv på nytt!"
+					imgBilde.scr = "narr.jpg";
+					imgBilde.alt = "Bilde av narr";
+					summerTall(15, inpSpm1.value);
+				}
+			}
+		}
+	</script>
+</body>
+</html>

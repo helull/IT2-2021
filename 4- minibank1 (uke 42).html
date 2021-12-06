@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<title></title>
+</head>
+<body>
+
+	<h1>Velkommen til min Minibank</h1>
+	<h2>Saldo på kontoen: </h2> 
+	<p id="pSaldo" type="number"></p>
+	<input type="number" id="inpSettInn"> 
+    <button id="btnSettInn">Sett inn kontanter</button>
+    <br>
+    <input type="number" id="inpTaUt"> 
+    <button id="btnTaUt">Ta ut kontanter</button>
+
+	<script type="text/javascript">
+
+		var saldo = 20000;  //global variabel
+		var pSaldo = document.getElementById("pSaldo");
+		var btnTaUt = document.getElementById("btnTaUt");
+		var inpTaUt = document.getElementById("inpTaUt");
+		var btnSettInn = document.getElementById("btnSettInn");
+		var inpSettInn = document.getElementById("inpSettInn");
+
+		pSaldo.innerHTML = String(saldo);
+
+		btnSettInn.onclick = function () {
+			saldo = saldo +  Number(inpSettInn.value);
+			pSaldo.innerHTML = String(saldo);
+		}
+
+		btnTaUt.onclick = function () {
+			var uttak = Number(inpTaUt.value); 
+			if ((saldo - uttak) < 0) {
+				alert("Ups, så mye har du ikke på kontoen!");
+			} else {
+				saldo = saldo - uttak;
+				pSaldo.innerHTML = String(saldo);
+		}
+		}
+	</script>
+
+	<!--<input id="inpInnskudd" placeholder="Penger inn" type="number">
+	<button id="btnInnskudd">Sett inn</button>
+	<input id="inpUttak" placeholder="Penger ut">
+	<button id="btnUttak">Ta ut</button>
+	<button id="btnKontoutskrift">Kontoutskrift</button>
+
+	<div id="utskrift"></div>
+	 <script type="text/javascript">
+		var btnKontoutskrift = document.getElementById("btnKontoutskrift");
+		var btnInnskudd = document.getElementById("btnInnskudd");
+		var btnUttak = document.getElementById("btnUttak");
+		var inpInnskudd = document.getElementById("inpInnskudd");
+		var inpUttak = document.getElementById("inpUttak");
+		var utskrift = document.getElementById("utskrift");
+
+		var tempTrans = {belop:0, innEllerUt:"", dato:""};
+		var tempTrans2 = {belop:0, innEllerUt:"", dato:""};
+		var nr = 0;
+
+		var mineTransaksjoner=[];
+
+		btnKontoutskrift.onclick = function() {
+			//alert(mineTransaksjoner)
+			while(nr <= mineTransaksjoner.length - 1) {
+				if (mineTransaksjoner[nr].innEllerUt === "inn") {
+				utskrift.innerHTML += "<h1 style='color:green'>Beløp: "+ mineTransaksjoner[nr].belop + " er penger " + mineTransaksjoner[nr].innEllerUt + "dato: " + mineTransaksjoner[nr].dato + "<br>";
+				}
+				if (mineTransaksjoner[nr].innEllerUt === "ut") {
+				utskrift.innerHTML += "<h1 style='color:red'>Beløp: "+ mineTransaksjoner[nr].belop + " er penger " + mineTransaksjoner[nr].innEllerUt + "dato: " + mineTransaksjoner[nr].dato + "<br>";
+				}				
+				nr++; //inkrementere
+			}
+		}
+
+		btnInnskudd.onclick = function () {
+			//alert("Hurra, Du satt inn " + inpInnskudd.value + " kr");
+			tempTrans.belop = Number(inpInnskudd.value);
+			tempTrans.innEllerUt = "inn";
+			tempTrans.dato = "28.10.2021";
+			mineTransaksjoner.push(tempTrans);
+		}
+
+		btnUttak.onclick = function () {
+			//alert(" Ups, Du tok ut " + inpUttak.value + " kr");
+			tempTrans2.belop = Number(inpUttak.value);
+			tempTrans2.innEllerUt = "ut";
+			tempTrans2.dato = "28.10.2021";
+			mineTransaksjoner.push(tempTrans2);
+		}
+
+	</script>-->
+</body>
+</html>
