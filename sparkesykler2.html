@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<title>Sparkesykler</title>
+</head>
+<body>
+	<h1>Registrerings-system for elsparkesykler i Asker</h1>
+	<input id="inpNavn" placeholder = "Sykkelens navn" type="">
+	<input id="inpHjelm" placeholder = "Finnes hjelm" type="">
+	<input id="inpSted" placeholder = "Hvor finnes denne?" type="">
+	<input id="inpID" placeholder = "Sykkelens ID" type="">
+	<input id="inpLadeProsent" placeholder = "Sykkelens ladeprosent" type="">
+	<button id="btnLeggInn">Legg inn data</button>
+	<hr>
+	<input id="inpIdSok" placeholder = "Gi ID" type="">
+	<button id="btnVisInfoOmID">Vis info om denne sykkel</button>
+	<hr>
+	<input id="inpStedSok" placeholder = "Angi sted" type="">
+	<button id="btnVisInfoOmSted">Vis oversikt over syklene på dette sted</button>
+	<div id="txtOutput"></div>
+
+	<script type="text/javascript">
+		var inpNavn = document.getElementById("inpNavn");
+		var inpHjelm = document.getElementById("inpHjelm");
+		var inpSted = document.getElementById("inpSted");
+		var inpID = document.getElementById("inpID");
+		var inpLadeProsent = document.getElementById("inpLadeProsent");
+		var btnLeggInn = document.getElementById("btnLeggInn");
+		var inpIdSok = document.getElementById("inpIdSok");
+		var btnVisInfoOmID = document.getElementById("btnVisInfoOmID");
+		var inpStedSok = document.getElementById("inpStedSok");
+		var btnVisInfoOmSted = document.getElementById("btnVisInfoOmSted");
+		var txtOutput = document.getElementById("txtOutput");
+
+		var syklArray = [];
+
+		btnLeggInn.onclick = function(){
+			var temp = {navn:"", ID:0, ladet:0, hjelm:""};
+			temp.navn=String(inpNavn.value);
+			temp.ID=Number(inpID.value);
+			temp.hjelm=String(inpHjelm.value);
+			temp.ladet=Number(inpLadeProsent.value);
+			temp.sted=String(inpSted.value.toLowerCase());
+			syklArray.push(temp);
+		}
+
+		btnVisInfoOmID.onclick = function(){
+			var nr=0;
+			var funnet=false;
+			txtOutput.innerHTML = "";
+			while (nr<syklArray.length){
+				if(syklArray[nr].ID === Number(inpIdSok.value)) {
+					txtOutput.innerHTML += `<h3>fant denne: ID: ${syklArray[nr].ID} som heter ${syklArray[nr].navn} og står på ${syklArray[nr].sted}</h3>`;
+					funnet = true;
+				}
+				nr++;
+			}
+			if (!funnet) {
+				txtOutput.innerHTML = "Ikke funnet";
+			}
+		}
+
+		btnVisInfoOmSted.onclick = function(){
+			var nr=0;
+			var funnet=false;
+			txtOutput.innerHTML = "";
+			while (nr<syklArray.length){
+				if(syklArray[nr].sted === String(inpStedSok.value).toLowerCase()) {
+					txtOutput.innerHTML += `<h3>fant denne: ID: ${syklArray[nr].ID} som står på ${syklArray[nr].sted}</h3>`;
+					funnet = true;
+				}
+				nr++;
+			}
+			if (!funnet) {
+				txtOutput.innerHTML = "Ikke funnet";
+			}
+		}
+
+	</script>
+
+</body>
+</html>
