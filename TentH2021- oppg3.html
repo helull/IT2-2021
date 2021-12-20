@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<title>oppgave 3</title>
+</head>
+<body>
+
+<input type="number" id="antKopper" placeholder="Skriv inn antall kopper kaffe">
+    <p style="display:inline">Student?</p>
+    <label><input type="radio" id="studentJa" name="student" value="ja">Ja</label>
+    <label><input type="radio" id="studentNei" name="student" value="nei" checked>Nei</label>
+    <p style="display:inline">&nbsp; &nbsp; Velg type kaffe:</p>
+    <select id="kaffeType">
+        <option value="svart">Svart kaffe</option>
+        <option value="melk">Kaffe med melk</option>
+    </select>
+    <button id="btnReg">Registrer kaffe</button>
+    <button id="btnRegning">Skriv regning</button>
+    <h1 id="txtImg">
+    <img id="bilde"
+            src="https://www.kaffebrenneriet.no/uploads/images/_image360x348/Svart_kaffe_nett_18.jpg"></h1>
+    <h1 id="txtPris">Pris er: 0</h1>
+    <h1 id="regning"></h1>
+    <script>
+        var antKopper = document.getElementById("antKopper");
+        var studentJa = document.getElementById("studentJa");
+        var studentNei = document.getElementById("studentNei");
+        var kaffeType = document.getElementById("kaffeType");
+        var txtImg = document.getElementById("txtImg");
+        var bilde = document.getElementById("bilde")
+        var txtPris = document.getElementById("txtPris");
+        var btnReg = document.getElementById("btnReg");
+        var btnRegning = document.getElementById("btnRegning");
+        var txtRegning = document.getElementById("regning")
+
+        var pris = 0;
+        var totalPris = 0;
+        var valgtIndex = kaffeType.selectedIndex;
+        var valgtType = kaffeType[valgtIndex];
+        var transArray = [];
+        var totalKopper = 0;
+        var prisTrans = 0;
+
+        bilde.onmouseenter = function () {
+            bilde.style.width = 440 + "px";
+        }
+
+        bilde.onmouseleave = function () {
+            bilde.style.width = 400 + "px";
+        }
+
+        bilde.ondblclick = function () {
+            antKopper.value = "";
+            txtPris.innerHTML = "";
+            txtRegning.innerHTML = "";
+            pris = 0;
+            txtPris.innerHTML = `Pris er: ${pris}`;
+        }
+
+        btnReg.onclick = function () {
+            totalKopper += Number(antKopper.value)
+
+            var studentRabatt = 1; //normalt gies ikke rabatt
+            if (studentJa.checked) { //studentrabatt er 50%
+               studentRabatt = 0.5;
+            }
+
+            var kvantumsRabatt = 1;  //normalt gies ikke rabatt
+            var rabattTekst = "";    //tekst som "limes inn"
+			if (totalKopper > 20) {  //rabatt på 10% gis dersom mer enn 20 kopper
+				kvantumsRabatt = 0.9;
+				rabattTekst = "***Det innrømmes 10% rabatt***";
+			}
+
+			var kaffePris = 20;  //prisen er normalt 20,-
+			if (valgtType.value == "melk") {  //25,- hvis melk
+				var kaffePris = 25;		
+			}
+
+			//Regn ut prisen!
+            pris = ((kaffePris * antKopper.value) * studentRabatt) * kvantumsRabatt;
+            totalPris += ((kaffePris * antKopper.value) * studentRabatt) * kvantumsRabatt;
+            prisTrans = ((kaffePris * antKopper.value) * studentRabatt) * kvantumsRabatt;
+
+            //Avrund prisen oppover til nærmeste hele krone!
+            pris = Math.ceil(pris);
+            totalPris = Math.ceil(totalPris);
+            prisTrans = Math.ceil(prisTrans);
+
+            //SKriv ut prisen, samt eventuell rabatt-tekst.
+            txtPris.innerHTML = `${rabattTekst}<br>Pris er: ${pris}kr`
+
+            transArray.push({ antall: antKopper.value, type: valgtType.value, prisen: prisTrans })
+        }
+
+        kaffeType.onchange = function () {
+            valgtIndex = kaffeType.selectedIndex
+            valgtType = kaffeType[valgtIndex]
+            if (valgtType.value == "svart") {
+                bilde.src = "https://www.kaffebrenneriet.no/uploads/images/_image360x348/Svart_kaffe_nett_18.jpg"
+            }
+            else if (valgtType.value == "melk") {
+                bilde.src = "https://www.vitusapotek.no/medias/Kalsium-og-kaffe-pearl866x?context=bWFzdGVyfGltYWdlc3wzMjM1NHxpbWFnZS9qcGVnfGltYWdlcy9oYjkvaGVmLzk5MDQ3Nzc1MjczMjYuanBnfDNlOGNjNzliYjc2ZTBjMTRlMzQ0OTYxYTcxNjdlZmQxMmM5YWVjNGQyZTU4NGUxMGM5MzhmYmE5NGFiMmFjNjc"
+            }
+        }
+
+        function skrivRegning() {
+            txtRegning.innerHTML ="";
+            for (var bestilling of transArray) {
+                txtRegning.innerHTML += `
+                Antall kopper: ${bestilling.antall} <br>
+                Type kaffe: ${bestilling.type}<br>
+                Betalt: ${bestilling.prisen}kr<br><br>`
+        	}
+
+            txtRegning.innerHTML += `
+            Total pris er ${totalPris}kr <br>
+            Totalt antall kopper er ${totalKopper}`;
+    	}
+
+        btnRegning.onclick = skrivRegning;
+
+        onkeydown = function () {
+            if (event.keyCode == "82") {
+                skrivRegning();
+            }
+        }
+
+    </script>
+
+</body>
+</html>
