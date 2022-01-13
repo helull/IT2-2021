@@ -1,0 +1,68 @@
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title></title>
+    <style>
+        body {
+            background-color: #666;
+        }
+
+        #canvas {
+            background-color: #000;
+            margin-left: 100px;
+        }
+    </style>
+
+</head>
+<body>
+    <canvas id="canvas" width="500" height="500"></canvas>
+    <br>
+    <label>Størrelse<input id="faktor" type="range" min="0.8" max="1" step="0.01" name=""></label>
+    <br>
+    <label>Hastighet<input id="hastighet" type="range" min="10" max="100" step="10" name=""></label>
+
+    <script>
+        var canvas = document.getElementById("canvas");
+        var ctx = canvas.getContext("2d");
+        partikkelListe = [];
+
+        //tegn første pulje
+        var intervall = setInterval(draw, 100);
+
+        //window.onload = function() {
+        hastighet.onchange = function() {
+
+            clearInterval(intervall);
+            intervall = setInterval(draw, Number(hastighet.value));
+        };
+
+        //Tegner particle
+        function draw() {
+            ctx.clearRect(0,0,500,500);
+ 
+            //Lag en ny partikkel
+            var particle = {
+                x:250, y:250, size:30, farge:"red", xSpeed:2, ySpeed:2
+            };
+
+            //Setter "retning" for den nye partiklen
+            particle.xSpeed = Math.floor(Math.random()*20 - Math.random()*20);
+            particle.ySpeed = Math.floor(Math.random()*20 - Math.random()*20);
+
+            //Dytter ny partikkel med sin helt egne "retning" inn i arrayen
+            partikkelListe.push(particle);
+
+            //Tegn alle partiklene i lista
+            for (var i = 0; i < partikkelListe.length; i++) {
+                partikkelListe[i].x = partikkelListe[i].x + partikkelListe[i].xSpeed;
+                partikkelListe[i].y = partikkelListe[i].y + partikkelListe[i].ySpeed;
+                partikkelListe[i].size = partikkelListe[i].size*Number(faktor.value);
+                ctx.fillStyle = particle.farge;
+                ctx.fillRect(partikkelListe[i].x, partikkelListe[i].y, partikkelListe[i].size, partikkelListe[i].size);
+            }
+        }
+
+    </script>
+
+</body>
+</html>
