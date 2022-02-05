@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="no">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        input {
+            position:absolute;
+            left:150px;
+        }
+    </style>
+</head>
+<body>
+
+    <label>Antall iterasjoner<input id="inpIterasjoner" type="number" value="100"></label> <br>
+    <label>Populasjon<input id="inpPopulasjon" type="number" value="5000000"></label><br>
+    <label>Infiserte ved start<input id="inpInfiserte" type="number" value="1"></label><br>
+    <label>Fjernet ved start<input id="inpFjernet" type="number" value="0"></label><br>
+    <label>s<input id="inp_s" type="number" value="0.0000001"></label><br>
+    <label>r<input id="inp_r" type="number" value="0.29"></label><br>
+
+    <div id="minGrafikk" style="width:900px;height:500px;"></div>
+    <script src="http://code.highcharts.com/highcharts.js"></script>
+
+    <script>
+        var s;
+        var r;
+        var inpIterasjoner = document.getElementById("inpIterasjoner");
+        var inpPopulasjon = document.getElementById("inpPopulasjon");
+        var inpInfiserte = document.getElementById("inpInfiserte");
+        var inpFjernet = document.getElementById("inpFjernet");
+        var inp_s = document.getElementById("inp_s");
+        var inp_r = document.getElementById("inp_r");
+        var I=[];
+        var R=[];
+        var S=[];
+
+        //I starten: Les initialverdier og tegn grafene
+        lesParametre();
+        regnSIR();
+        tegnSIR();
+
+        minGrafikk.onclick = function () {
+            lesParametre();
+            regnSIR();
+            tegnSIR();
+        }
+
+        function lesParametre() {
+            //Tøm først arrayene
+            I=[];
+            R=[];
+            S=[];
+
+            //Sett opp parametrene som er nødvendig            
+            antIterasjoner = Number(inpIterasjoner.value);
+            P = Number(inpPopulasjon.value);
+            I[0] = Number(inpInfiserte.value);
+            R[0] = Number(inpFjernet.value);
+            S[0] = P - I[0] - R[0];
+            s = Number(inp_s.value);
+            r = Number(inp_r.value);
+        }
+
+        function regnSIR() {  //dette er regnemaskinen. Alt annet er tjafs.
+            for (var n=0; n < antIterasjoner; n++) {
+
+                //Lager 3 arrayer, ett for hver kategori (S I R)
+                R[n+1] = R[n] + r * I[n];
+                S[n+1] = S[n] - s * S[n] * I[n]; 
+                I[n+1] = I[n] - r * I[n] + s * S[n] * I[n];
+            }
+        }
+
+        //Bruker HighChart rått og røti, har liten kompetanse her, men det funker.
+        function tegnSIR() {
+            var minChart=new Highcharts.Chart({
+                chart: {
+                    renderTo:'minGrafikk',
+                    type:'line'
+                },
+                title: {
+                    text:'Utvikling av en Pandemi (klikk for oppdatering)'
+                },
+                yAxis: {
+                    title:{
+                        text:'Antall Mennesker'
+                    }
+                },
+                series: [
+                {
+                    name:"S",
+                    data:S   //dytter inn S-arrayen
+                }, {
+                    name:"I",
+                    data:I   //dytter inn I-arrayen
+                }, {
+                    name:"R",
+                    data:R  //dytter inn R-arryen
+                }
+
+                ]
+            })
+        }
+    </script>
+</body>
+</html>
