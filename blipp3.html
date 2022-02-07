@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html>
+<head>
+     <meta charset="utf-8">
+     <title></title>
+     <style>
+     div {
+          position: absolute;
+          width: 50px;
+          height: 50px;
+          border-radius: 50%;
+     }
+     h1 {
+          position: absolute;
+          top: 10px;
+          right: 10px;
+     }
+</style>
+</head>
+<body>
+     <h1>Poeng</h1>
+     <input id="minFarge" type="color">
+     <script>
+          var ny=false;
+          var minFarge=document.getElementById("minFarge");
+
+          minFarge.onclick = function(evt) {
+               evt.stopPropagation();
+          }
+
+          function fjernMeg(evt) {
+               evt.stopPropagation();
+               var sirkel = evt.target;
+               var minAnim = sirkel.animate([{transform:"scale(1)"},{transform:"scale(0.5)"},{transform:"scale(1)"},{transform:"scale(0)"}],300);
+               minAnim.onfinish = function () {
+                    document.body.removeChild(sirkel);
+               }
+          }
+
+          function blipp(evt) {
+               if(!ny) {
+               evt.stopPropagation();               
+               var sirkel = evt.target;
+               var minAnim = sirkel.animate([{transform:"translate(0px,0px)"},{transform:"translate(50px,0px)"}],1000)
+               }
+               ny = false;
+          }
+
+          window.onclick = function(evt) {
+               ny=true;
+               var mittElement = document.createElement("div");
+               mittElement.style.backgroundColor = minFarge.value;
+               mittElement.style.top = evt.clientY - 25 + "px";
+               mittElement.style.left = evt.clientX - 25  + "px";
+               mittElement.animate([{opacity:0},{opacity:1}],2000);
+               document.body.appendChild(mittElement);
+               mittElement.onclick = fjernMeg;
+               mittElement.onmouseover = blipp;
+          }
+     </script>
+</body>
+</html>
